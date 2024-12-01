@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { MapComponent } from './map/map.component'; // Adjust the import path if needed
+import { MapComponent } from './map/map.component'; // Import MapComponent
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/map', pathMatch: 'full' }, // Redirect to the map by default
-  { path: 'map', component: MapComponent },
+  { path: '', redirectTo: '/map', pathMatch: 'full' }, // Redirect root to /map
+  { path: 'map', component: MapComponent },  // Define the map route
 ];

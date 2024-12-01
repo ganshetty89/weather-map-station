@@ -2,4 +2,16 @@
     height: 600px;
     width: 100%;
   }
+  ::ng-deep .leaflet-marker-icon {
+    width: 15px !important; /* Smaller width */
+    height: 22px !important; /* Smaller height */
+    margin-left: -7.5px; /* Adjust for centering horizontally */
+    margin-top: -22px; /* Adjust for centering vertically */
+  }
   
+  ::ng-deep .leaflet-marker-shadow {
+    width: 22px !important; /* Match shadow size to the icon */
+    height: 22px !important;
+  }
+  
+

@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Weather Station: {{ data.name }}</h2>
+
+<div mat-dialog-content>
+  <p><strong>Location:</strong> {{ data.label_location.latitude }}, {{ data.label_location.longitude }}</p>
+  
+  <p><strong>Forecast:</strong></p>
+  <ul>
+    <li *ngFor="let forecast of data.forecast">
+      <strong>{{ forecast.area }}</strong>: {{ forecast.forecast }}
+    </li>
+  </ul>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="close()">Close</button>
+</div>
