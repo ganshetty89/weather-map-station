@@ -1,0 +1,11 @@
+<div class="search-container">
+    <input
+      type="text"
+      class="search-box"
+      placeholder="Search location..."
+      [(ngModel)]="searchQuery"
+      (input)="onSearch()"
+    />
+    <button *ngIf="searchQuery" class="clear-button" (click)="clearSearch()">×</button>
+  </div>
+  

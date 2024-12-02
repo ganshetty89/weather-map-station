@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as L from 'leaflet';
 import { MatDialog } from '@angular/material/dialog';
-import { WeatherModalComponent } from '../weather-modal/weather-modal.component'; // Make sure to adjust the import path
+import { WeatherModalComponent } from '../weather-modal/weather-modal.component'; // Import modal
 
 @Component({
   selector: 'app-map',
@@ -40,15 +40,11 @@ export class MapComponent implements OnInit {
       const stations = data.area_metadata;
 
       stations.forEach((station: any) => {
-        const { name, label_location, forecast } = station;
+        const { name, label_location } = station;
         const { latitude, longitude } = label_location;
 
         const marker = L.marker([latitude, longitude], { icon: smallIcon })
           .addTo(this.map)
-          .bindPopup(`
-            <b>${name}</b>
-            <p>Location: (${latitude}, ${longitude})</p>
-          `)
           .on('click', () => {
             this.openWeatherModal(station);
           });
@@ -56,11 +52,16 @@ export class MapComponent implements OnInit {
     });
   }
 
-  // Open the modal with weather details
+  // Open modal with weather details
   private openWeatherModal(station: any): void {
-    this.dialog.open(WeatherModalComponent, {
-      data: station,  // Pass station data to modal
-      width: '400px', // Set modal width
+    const openMeteoUrl = `https://api.open-meteo.com/v1/forecast?latitude=${station.label_location.latitude}&longitude=${station.label_location.longitude}&hourly=relativehumidity_2m,direct_radiation&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FSingapore`;
+
+    this.http.get(openMeteoUrl).subscribe((weatherData: any) => {
+      this.dialog.open(WeatherModalComponent, {
+        data: { station, weatherData },
+        width: '400px', // Set modal width
+        panelClass: 'custom-modal', // Optional: Add custom class
+      });
     });
   }
 }

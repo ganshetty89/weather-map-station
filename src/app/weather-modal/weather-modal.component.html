@@ -1,16 +1,14 @@
-<h2 mat-dialog-title>Weather Station: {{ data.name }}</h2>
-
-<div mat-dialog-content>
-  <p><strong>Location:</strong> {{ data.label_location.latitude }}, {{ data.label_location.longitude }}</p>
+<div class="modal-header">
+    <h2>Weather Details</h2>
+  </div>
+  <div class="modal-content">
+    <p><strong>Station Name:</strong> {{ data.station.name }}</p>
+    <p><strong>Latitude:</strong> {{ data.station.label_location.latitude }}</p>
+    <p><strong>Longitude:</strong> {{ data.station.label_location.longitude }}</p>
+    <p><strong>Temperature Max:</strong> {{ data.weatherData.daily.temperature_2m_max[0] }} °C</p>
+    <p><strong>Temperature Min:</strong> {{ data.weatherData.daily.temperature_2m_min[0] }} °C</p>
+  </div>
+  <div class="modal-actions">
+    <button mat-button (click)="close()">Close</button>
+  </div>
   
-  <p><strong>Forecast:</strong></p>
-  <ul>
-    <li *ngFor="let forecast of data.forecast">
-      <strong>{{ forecast.area }}</strong>: {{ forecast.forecast }}
-    </li>
-  </ul>
-</div>
-
-<div mat-dialog-actions>
-  <button mat-button (click)="close()">Close</button>
-</div>

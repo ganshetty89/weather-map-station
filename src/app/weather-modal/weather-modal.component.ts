@@ -11,11 +11,11 @@ import { CommonModule } from '@angular/common';
 })
 export class WeatherModalComponent {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,  // Inject passed data
-    private dialogRef: MatDialogRef<WeatherModalComponent>  // Inject MatDialogRef
+    @Inject(MAT_DIALOG_DATA) public data: any, // Inject passed data
+    private dialogRef: MatDialogRef<WeatherModalComponent> // Inject MatDialogRef
   ) {}
 
   close(): void {
-    this.dialogRef.close();  // Close the dialog
+    this.dialogRef.close(); // Close the modal dialog
   }
 }
