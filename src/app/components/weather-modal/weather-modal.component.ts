@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core'; 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import * as L from 'leaflet';
@@ -40,13 +40,21 @@ export class WeatherModalComponent implements OnInit, OnDestroy {
       scrollWheelZoom: false, // Disable zoom with the scroll wheel
     });
 
-    // Add a tile layer (you can choose any tile provider you prefer)
+    // Add a tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors',
     }).addTo(this.miniMap);
 
-    // Add a marker at the station's location
-    L.marker([latitude, longitude]).addTo(this.miniMap)
+    // Custom marker icon using local assets
+    const miniMapIcon = L.icon({
+      iconUrl: 'assets/images/leaflet/marker-icon.png', // Local path to marker icon
+      shadowUrl: 'assets/images/leaflet/marker-shadow.png', // Local path to marker shadow
+      iconSize: [15, 22], // Adjust size for mini map
+      iconAnchor: [7.5, 22], // Anchor point for positioning
+    });
+
+    // Add a marker at the station's location with the custom icon
+    L.marker([latitude, longitude], { icon: miniMapIcon }).addTo(this.miniMap)
       .bindPopup(`Location: ${this.data.station.name}`);
   }
 

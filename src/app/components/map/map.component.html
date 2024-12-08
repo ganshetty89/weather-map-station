@@ -1,3 +1,5 @@
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
 <app-search-location
   [suggestions]="stationNames"
   (locationSelected)="focusOnLocation($event)"

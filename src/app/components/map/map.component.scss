@@ -31,4 +31,21 @@
     text-align: center;
     white-space: nowrap; /* Prevent text wrapping */
   }
+
+  .error-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: red;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border: 1px solid red;
+    border-radius: 8px;
+  }
+  
   

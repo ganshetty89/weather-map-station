@@ -2,22 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { MatDialog } from '@angular/material/dialog';
 import { WeatherModalComponent } from '../weather-modal/weather-modal.component';
-import { ApiService } from '../../services/api.service';  // Import the service
+import { ApiService } from '../../services/api.service';
 import { SearchLocationComponent } from '../search-location/search-location.component';
+import { CommonModule } from '@angular/common'; // Import CommonModule
 
 @Component({
   selector: 'app-map',
   standalone: true,
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
-  imports: [SearchLocationComponent], // Import SearchLocationComponent
+  imports: [CommonModule, SearchLocationComponent], // Add CommonModule
 })
 export class MapComponent implements OnInit {
   private map!: L.Map;
   private markers: { marker: L.Marker; name: string }[] = []; // Store markers with names
   stationNames: string[] = []; // Location names for autocomplete
+  highlightedMarker: L.Marker | null = null; // Currently highlighted marker
+  errorMessage: string = ''; // Error message
 
-  constructor(private apiService: ApiService, private dialog: MatDialog) {} // Inject ApiService
+  constructor(private apiService: ApiService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.initMap();
@@ -36,8 +39,8 @@ export class MapComponent implements OnInit {
     this.apiService.getStationData().subscribe((data: any) => {
       const stations = data.area_metadata;
       const smallIcon = L.icon({
-        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+        iconUrl: 'assets/images/leaflet/marker-icon.png',
+        shadowUrl: 'assets/images/leaflet/marker-shadow.png',
       });
 
       stations.forEach((station: any) => {
@@ -51,7 +54,7 @@ export class MapComponent implements OnInit {
           });
 
         this.markers.push({ marker, name });
-        this.stationNames.push(name); // Populate names for autocomplete
+        this.stationNames.push(name);
       });
     });
   }
@@ -67,12 +70,39 @@ export class MapComponent implements OnInit {
     });
   }
 
-  // Zoom into the selected location
   focusOnLocation(locationName: string): void {
     const location = this.markers.find(({ name }) => name.toLowerCase() === locationName.toLowerCase());
     if (location) {
       const { marker } = location;
-      this.map.setView(marker.getLatLng(), 15, { animate: true }); // Zoom to the location
+
+      if (this.highlightedMarker) {
+        this.resetMarker(this.highlightedMarker);
+      }
+
+      this.highlightMarker(marker);
+      this.highlightedMarker = marker;
+
+      this.map.setView(marker.getLatLng(), 15, { animate: true });
     }
+  }
+
+  private highlightMarker(marker: L.Marker): void {
+    const highlightIcon = L.icon({
+      iconUrl: 'assets/images/leaflet/marker-icon-2x.png',
+      shadowUrl: 'assets/images/leaflet/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+    });
+    marker.setIcon(highlightIcon);
+  }
+
+  private resetMarker(marker: L.Marker): void {
+    const defaultIcon = L.icon({
+      iconUrl: 'assets/images/leaflet/marker-icon.png',
+      shadowUrl: 'assets/images/leaflet/marker-shadow.png',
+      iconSize: [15, 22],
+      iconAnchor: [7.5, 22],
+    });
+    marker.setIcon(defaultIcon);
   }
 }
