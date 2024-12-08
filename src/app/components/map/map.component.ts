@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { MatDialog } from '@angular/material/dialog';
 import { WeatherModalComponent } from '../weather-modal/weather-modal.component';
-import { ApiService } from '../api.service';  // Import the service
+import { ApiService } from '../../services/api.service';  // Import the service
 import { SearchLocationComponent } from '../search-location/search-location.component';
 
 @Component({
