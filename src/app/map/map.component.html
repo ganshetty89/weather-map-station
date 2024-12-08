@@ -1,1 +1,5 @@
-<div id="map" style="height: 600px; width: 100%;"></div>
+<app-search-location
+  [suggestions]="stationNames"
+  (locationSelected)="focusOnLocation($event)"
+></app-search-location>
+<div id="map"></div>

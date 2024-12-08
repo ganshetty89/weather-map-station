@@ -68,3 +68,12 @@
     background: rgba(255, 255, 255, 0.4);
     color: black;
 }
+
+/* Optional: Make sure the mini map looks good inside the modal */
+#mini-map {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 10px;
+    background-color: #f4f4f4;
+  }
+  

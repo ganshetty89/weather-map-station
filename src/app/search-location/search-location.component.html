@@ -1,0 +1,16 @@
+<div class="search-container">
+    <input
+      type="text"
+      class="search-box"
+      placeholder="Search location..."
+      [(ngModel)]="searchQuery"
+      (input)="onSearch()"
+    />
+  </div>
+  
+  <ul class="suggestions" *ngIf="filteredSuggestions.length > 0">
+    <li *ngFor="let suggestion of filteredSuggestions" (click)="selectSuggestion(suggestion)">
+      {{ suggestion }}
+    </li>
+  </ul>
+  
